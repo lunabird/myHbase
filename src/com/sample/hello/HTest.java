@@ -27,6 +27,12 @@ import org.apache.hadoop.hbase.filter.FilterList;
 import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 
+/**
+ * @brief HBase的基本操作示例。与极光数据处理无关。
+ * @author huangpeng
+ * @date 2015/3/11
+ *
+ */
 public class HTest {
 
 	public static Configuration configuration;

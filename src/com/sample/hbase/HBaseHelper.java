@@ -1,4 +1,4 @@
-package com.sample.git.hbase;
+package com.sample.hbase;
 
 import java.io.IOException;
 import java.util.List;
@@ -177,8 +177,6 @@ public class HBaseHelper {
 	 * 将图片插入到表中
 	 * @param table 表名
 	 * @param rowKey 图片文件名
-	 * @param prefix 字符串content
-	 * @param qualifier 空字符串
 	 * @param value byte[]表示图片的字节流
 	 * @throws IOException
 	 */

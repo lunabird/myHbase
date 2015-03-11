@@ -1,4 +1,4 @@
-package com.sample.git.hbase;
+package com.sample.hbase;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -85,7 +85,7 @@ public class HBaseLoader {
 		try {
 //			byte[] content = Bytes.toBytes(FileUtils.readFileToString(file, "UTF-8"));
 //			byte[] content = image2Bytes(file.getAbsolutePath());
-			byte[] content = FileUtils.readFileToByteArray(file);
+			byte[] content = FileUtils.readFileToByteArray(file);//将图片内容转换成字节流
 			hbase.insert(table, file.getName(),content);
 			System.out.println("insert data into "+new String(table.getTableName())+" ok!");
 		} catch (IOException e) {

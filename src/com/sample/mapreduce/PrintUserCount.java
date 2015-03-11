@@ -1,4 +1,4 @@
-package com.sample.hbase.mapreduce;
+package com.sample.mapreduce;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
@@ -8,7 +8,13 @@ import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
 import org.apache.hadoop.hbase.util.Bytes;
-
+/**
+ * 此包包含了一个mapreduce程序的示例。用来学习MapReduce编程。
+ * 与极光数据无关。
+ * @author huangpeng
+ * @date 2015/3/11
+ *
+ */
 public class PrintUserCount {
 
 	public static Configuration configuration;

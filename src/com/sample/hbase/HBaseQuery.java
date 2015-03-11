@@ -1,4 +1,4 @@
-package com.sample.git.hbase;
+package com.sample.hbase;
 
 import java.io.File;
 import java.io.IOException;

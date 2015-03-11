@@ -1,4 +1,4 @@
-package com.sample.hbase.mapreduce;
+package com.sample.mapreduce;
 
 import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
@@ -16,10 +16,12 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.mapreduce.Job;
 
 /**
+ * @brief  此包包含了一个mapreduce程序的示例。用来学习MapReduce编程。
+ * 与极光数据无关。
  * counts the number of userIDs
  * 
  * @author sujee ==at== sujee.net
- * 
+ * @date 2015/3/11
  */
 public class FreqCounter1 {
 

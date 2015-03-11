@@ -1,4 +1,4 @@
-package com.sample.git.hbase;
+package com.sample.hbase;
 
 import java.io.IOException;
 
@@ -19,7 +19,14 @@ import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapreduce.Job;
 
 
-
+/**
+ *
+ * @brief 在极光数据集上运行MapReduce程序
+ * @author huangpeng
+ * @version 0.1
+ * @date 2015-3-11 上午10:06:44 
+ *
+ */
 public class AuroraMR {
 	public static Configuration configuration;
 	static {

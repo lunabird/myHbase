@@ -1,4 +1,4 @@
-package com.sample.hbase.mapreduce;
+package com.sample.mapreduce;
 
 import java.util.Random;
 
@@ -9,6 +9,7 @@ import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
 
 /**
+ * @brief 此包包含了一个mapreduce程序的示例。用来学习MapReduce编程。与极光数据无关。
  * writes random access logs into hbase table
  * 
  *   userID_count => {
@@ -18,6 +19,7 @@ import org.apache.hadoop.hbase.util.Bytes;
  *   }
  * 
  * @author sujee ==at== sujee.net
+ * @date 2015/3/11
  *
  */
 public class Importer1 {
