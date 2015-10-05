@@ -12,11 +12,16 @@ package com.sample.hdfs;
  */
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.URI;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -26,7 +31,7 @@ public class OperaHDFS {
 	public static void main(String[] args) throws Exception {
 
 		// System.out.println("aaa");
-		uploadFile();
+		//uploadFile();
 		// createFileOnHDFS();
 		// deleteFileOnHDFS();
 		// createDirectoryOnHDFS();
@@ -34,8 +39,46 @@ public class OperaHDFS {
 		// renameFileOrDirectoryOnHDFS();
 		// downloadFileorDirectoryOnHDFS();
 		// readHDFSListAll();
+		
+		readFromHdfs();
 	}
+	/***
+	 * 加载配置文件
+	 * **/
+	static Configuration conf = new Configuration();
+	
+	private static void readFromHdfs() throws FileNotFoundException,
+			IOException {
 
+		String dst = "hdfs://192.168.0.120:9000/user/hadoop/huangpeng/picture/N041109G00001.img";
+		FileSystem fs = FileSystem.get(conf);
+		//Configuration conf = new Configuration();
+
+		//FileSystem fs = FileSystem.get(URI.create(dst), conf);
+
+		FSDataInputStream hdfsInStream = fs.open(new Path(dst));
+
+		OutputStream out = new FileOutputStream("/home/hp/Desktop/N041109G00001.img");
+
+		byte[] ioBuffer = new byte[1024];
+
+		int readLen = hdfsInStream.read(ioBuffer);
+
+		while (-1 != readLen) {
+
+			out.write(ioBuffer, 0, readLen);
+
+			readLen = hdfsInStream.read(ioBuffer);
+
+		}
+
+		out.close();
+
+		hdfsInStream.close();
+
+		fs.close();
+
+	}
 	/***
 	 * 上传windows本地文件到 HDFS上
 	 * 
@@ -62,10 +105,7 @@ public class OperaHDFS {
 
 	}
 	
-	/***
-	 * 加载配置文件
-	 * **/
-	static Configuration conf = new Configuration();
+	
 
 	/**
 	 * 重名名一个文件夹或者文件

@@ -32,12 +32,7 @@ public class HBaseLoader {
 	private static final HBaseHelper hbase =  HBaseHelper.create();
 	
     public static void main(String[] args) {    	
-//    	args[0] = "E:\\testTmp\\pic\\";
-//    	args[1] = "hpPicTable";
-//    	if (args.length < 1 || args.length > 2) {
-//    		error("HBaseLoader <tablename> <dir>");
-//    		return;
-//    	}
+
     	
 		if (hbase == null) {
 			error("Couldn't establish connection to HBase");

@@ -38,20 +38,21 @@ public class HTest {
 	public static Configuration configuration;
 	static {
 		configuration = HBaseConfiguration.create();
-		configuration.set("hbase.master", "192.168.137.135 :60000");
-		configuration.set("hbase.zookeeper.quorum", "192.168.137.135");//配置Zookeeper集群的地址列表
+		configuration.set("hbase.master", "192.168.0.120:60000");
+		configuration.set("hbase.zookeeper.quorum", "192.168.0.120,192.168.0.121,192.168.0.122,192.168.0.123,192.168.0.124," +
+				"192.168.0.125,192.168.0.126,192.168.0.127,192.168.0.128,192.168.0.129,192.168.0.130");//配置Zookeeper集群的地址列表
 		configuration.set("hbase.zookeeper.property.clientPort", "2181");
 	}
 
 	public static void main(String[] args) throws IOException {
-//		createTable("wujintao"); // 创建表
-//		insertData("wujintao"); //增加数据
-		QueryAll("wujintao"); //查询遍历数据
-//		QueryByCondition1("wujintao"); //条件查询
-//		QueryByCondition2("wujintao");
-		//QueryByCondition3("wujintao");//have an exception
-//		deleteRow("wujintao","112233bbbcccc"); //删除id为 112233bbbcccc 的数据
-//		deleteByCondition("wujintao","abcdef");
+//		createTable("SuperTest"); // 创建表
+//		insertData("SuperTest"); //增加数据
+//		QueryAll("SuperTest"); //查询遍历数据
+		QueryByCondition1("SuperTest"); //条件查询
+//		QueryByCondition2("SuperTest");
+		//QueryByCondition3("SuperTest");//have an exception
+//		deleteRow("SuperTest","112233bbbcccc"); //删除id为 112233bbbcccc 的数据
+//		deleteByCondition("SuperTest","abcdef");
 	}
 
 	/**
@@ -94,10 +95,10 @@ public class HTest {
 	public static void insertData(String tableName) throws IOException {
 		System.out.println("start insert data to "+tableName+" ......");
 		HTable table = new HTable(configuration, tableName);
-		Put put = new Put("112233bbbcccc".getBytes());// 一个PUT代表一行数据，再NEW一个PUT表示第二行数据,每行一个唯一的ROWKEY，此处rowkey为put构造方法中传入的值
-		put.add("column1".getBytes(), null, "aaa".getBytes());// 本行数据的第一列
-		put.add("column2".getBytes(), null, "bbb".getBytes());// 本行数据的第2列
-		put.add("column3".getBytes(), null, "ccc".getBytes());// 本行数据的第三列
+		Put put = new Put("112233bbbdddd".getBytes());// 一个PUT代表一行数据，再NEW一个PUT表示第二行数据,每行一个唯一的ROWKEY，此处rowkey为put构造方法中传入的值
+		put.add("column1".getBytes(), "dudu".getBytes(), "dudu_dog".getBytes());// 本行数据的第一列
+		put.add("column2".getBytes(), "kitty".getBytes(), "kitty_cat".getBytes());// 本行数据的第2列
+		put.add("column3".getBytes(), "winner".getBytes(), "winner_baby".getBytes());// 本行数据的第三列
 		try {
 			table.put(put);
 		} catch (IOException e) {
@@ -173,17 +174,16 @@ public class HTest {
 	 * @throws IOException
 	 */
 	public static void QueryByCondition1(String tableName) throws IOException {
-
-		// HTablePool pool = new HTablePool(configuration, 1000);
-		// HTable table = (HTable) pool.getTable(tableName);
 		HTable table = new HTable(configuration, tableName);
 		try {
-			Get scan = new Get("112233bbbcccc".getBytes());// 根据rowkey查询
+			Get scan = new Get("112233bbbdddd".getBytes());// 根据rowkey查询
 			Result r = table.get(scan);
 			System.out.println("获得到rowkey:" + new String(r.getRow()));
 			for (KeyValue keyValue : r.raw()) {
-				System.out.println("列：" + new String(keyValue.getFamily())
-						+ "====值:" + new String(keyValue.getValue()));
+				if(new String(keyValue.getQualifier()).equals("winner")){
+					System.out.println("列：" + new String(keyValue.getFamily())+"-"+new String(keyValue.getQualifier())
+					+ "====值:" + new String(keyValue.getValue()));
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
