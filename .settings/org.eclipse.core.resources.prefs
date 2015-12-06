@@ -1,4 +1,6 @@
-#Mon Dec 29 10:50:24 CST 2014
+#Fri Oct 09 10:32:54 CST 2015
 eclipse.preferences.version=1
-encoding//src/com/sample/hello/HTest.java=UTF-8
+encoding//src/com/aurora/hbase/mapreduce/bmp/GenerateBMP.java=UTF-8
+encoding//src/com/aurora/hbase/mapreduce/keogram/ChooseKeodata.java=UTF-8
+encoding//src/com/sample/hello/test/HTest.java=UTF-8
 encoding/<project>=UTF-8

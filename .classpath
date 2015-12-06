@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry exported="true" kind="lib" path="Jars/activation-1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="Jars/asm-3.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="Jars/avro-1.5.3.jar"/>
@@ -74,5 +73,8 @@
 	<classpathentry exported="true" kind="lib" path="Jars/velocity-1.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="Jars/xmlenc-0.52.jar"/>
 	<classpathentry exported="true" kind="lib" path="Jars/zookeeper-3.4.5.jar"/>
+	<classpathentry kind="lib" path="Jars/opencsv-2.3.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/Sun JDK 1.6.0_13"/>
+	<classpathentry kind="lib" path="Jars/JFeatureLib-1.6.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -20,8 +20,8 @@ public class PrintUserCount {
 	public static Configuration configuration;
 	static {
 		configuration = HBaseConfiguration.create();
-		configuration.set("hbase.master", "192.168.137.135 :60000");
-		configuration.set("hbase.zookeeper.quorum", "192.168.137.135");//配置Zookeeper集群的地址列表
+		configuration.set("hbase.master", "192.168.0.120 :60000");
+		configuration.set("hbase.zookeeper.quorum", "192.168.0.120");//配置Zookeeper集群的地址列表
 		configuration.set("hbase.zookeeper.property.clientPort", "2181");
 	}
 	

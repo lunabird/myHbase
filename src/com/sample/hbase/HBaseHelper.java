@@ -42,8 +42,8 @@ public class HBaseHelper {
 	private HBaseAdmin hbase;
 
 	static {
-		conf.set("hbase.master", "192.168.137.135 :60000");
-		conf.set("hbase.zookeeper.quorum", "192.168.137.135");//配置Zookeeper集群的地址列表
+		conf.set("hbase.master", "192.168.0.120 :60000");
+		conf.set("hbase.zookeeper.quorum", "192.168.0.120");//配置Zookeeper集群的地址列表
 		conf.set("hbase.zookeeper.property.clientPort", "2181");
 	}
 

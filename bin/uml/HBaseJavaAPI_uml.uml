@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmi:id="_qb8akM37EdqwVrslYOdUDA" name="HBaseJavaAPI_uml">
+  <packagedElement xmi:type="uml:Package" xmi:id="_0oMpQG1fEeW70PYbBQIFmQ" name="com">
+    <packagedElement xmi:type="uml:Package" xmi:id="_0oWaQG1fEeW70PYbBQIFmQ" name="aroura">
+      <packagedElement xmi:type="uml:Package" xmi:id="_0oWaQW1fEeW70PYbBQIFmQ" name="hbase">
+        <packagedElement xmi:type="uml:Package" xmi:id="_0oWaQm1fEeW70PYbBQIFmQ" name="util">
+          <packagedElement xmi:type="uml:Class" xmi:id="_0oWaQ21fEeW70PYbBQIFmQ" name="HBaseJavaAPI">
+            <ownedComment xmi:id="_0o8QIG1fEeW70PYbBQIFmQ">
+              <body>/** 
+ * 操作hbase的工具类
+ * @author hadoop
+ */
+</body>
+            </ownedComment>
+            <ownedAttribute xmi:id="_0rB60G1fEeW70PYbBQIFmQ" name="conf" visibility="private" isStatic="true" type="_0qbd7m1fEeW70PYbBQIFmQ"/>
+            <ownedOperation xmi:id="_0rU1wG1fEeW70PYbBQIFmQ" name="getHBaseConf" visibility="public" isStatic="true">
+              <ownedParameter xmi:id="_0rU1wW1fEeW70PYbBQIFmQ" name="return" type="_0qbd7m1fEeW70PYbBQIFmQ" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_0ts0UW1fEeW70PYbBQIFmQ" name="createTable" visibility="public" isStatic="true">
+              <ownedComment xmi:id="_0ts0Vm1fEeW70PYbBQIFmQ">
+                <body>/** 
+ * 创建数据库表
+ * @param tableName-表名
+ * @param columnFamilys-列族数组
+ * @throws Exception
+ */
+</body>
+              </ownedComment>
+              <ownedParameter xmi:id="_0ts0Um1fEeW70PYbBQIFmQ" name="tableName">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_0ts0U21fEeW70PYbBQIFmQ" name="columnFamilys">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_0ts0VG1fEeW70PYbBQIFmQ" value="*"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_0ts0VW1fEeW70PYbBQIFmQ"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_0t2lUG1fEeW70PYbBQIFmQ" name="createAuroraTable" visibility="public" isStatic="true">
+              <ownedComment xmi:id="_0t2lUW1fEeW70PYbBQIFmQ">
+                <body>/** 
+ * 创建数据库表Aurora
+ * @throws Exception
+ */
+</body>
+              </ownedComment>
+            </ownedOperation>
+            <ownedOperation xmi:id="_0t2lUm1fEeW70PYbBQIFmQ" name="deleteTable" visibility="public" isStatic="true">
+              <ownedComment xmi:id="_0uAWUG1fEeW70PYbBQIFmQ">
+                <body>/** 
+ * 删除数据库表
+ * @param tableName-hbase表名
+ * @throws Exception
+ */
+</body>
+              </ownedComment>
+              <ownedParameter xmi:id="_0t2lU21fEeW70PYbBQIFmQ" name="tableName">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_0uAWUm1fEeW70PYbBQIFmQ" name="addRow" visibility="public" isStatic="true">
+              <ownedComment xmi:id="_0uJgQG1fEeW70PYbBQIFmQ">
+                <body>/** 
+ * 添加一条数据
+ * @param tableName-表名
+ * @param rowKey-行键
+ * @param columnFamily-列族名
+ * @param column-列名
+ * @param value-值
+ * @throws Exception
+ */
+</body>
+              </ownedComment>
+              <ownedParameter xmi:id="_0uAWU21fEeW70PYbBQIFmQ" name="tableName">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_0uAWVG1fEeW70PYbBQIFmQ" name="rowKey">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_0uAWVW1fEeW70PYbBQIFmQ" name="columnFamily">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_0uAWVm1fEeW70PYbBQIFmQ" name="column">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_0uAWV21fEeW70PYbBQIFmQ" name="value">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#byte"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_0uAWWG1fEeW70PYbBQIFmQ" value="*"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_0uAWWW1fEeW70PYbBQIFmQ"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_0uJgQW1fEeW70PYbBQIFmQ" name="delRow" visibility="public" isStatic="true">
+              <ownedComment xmi:id="_0ucbMG1fEeW70PYbBQIFmQ">
+                <body>/** 
+ * 删除一条数据
+ * @param tableName-表名
+ * @param rowKey-行键
+ * @throws Exception
+ */
+</body>
+              </ownedComment>
+              <ownedParameter xmi:id="_0uJgQm1fEeW70PYbBQIFmQ" name="tableName">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_0uJgQ21fEeW70PYbBQIFmQ" name="rowKey">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_0ucbMW1fEeW70PYbBQIFmQ" name="delMultiRows" visibility="public" isStatic="true">
+              <ownedComment xmi:id="_0umMMG1fEeW70PYbBQIFmQ">
+                <body>/** 
+ * 删除多条数据
+ * @param tableName-表名
+ * @param rowKeys-行键数组
+ * @throws Exception
+ */
+</body>
+              </ownedComment>
+              <ownedParameter xmi:id="_0ucbMm1fEeW70PYbBQIFmQ" name="tableName">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_0ucbM21fEeW70PYbBQIFmQ" name="rowKeys">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_0ucbNG1fEeW70PYbBQIFmQ" value="*"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_0ucbNW1fEeW70PYbBQIFmQ"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_0umMMW1fEeW70PYbBQIFmQ" name="getRow" visibility="public" isStatic="true">
+              <ownedComment xmi:id="_0uv9MG1fEeW70PYbBQIFmQ">
+                <body>/** 
+ * 获取一条数据
+ * @param tableName-表名
+ * @param rowKey-行键数组
+ * @throws Exception
+ */
+</body>
+              </ownedComment>
+              <ownedParameter xmi:id="_0umMMm1fEeW70PYbBQIFmQ" name="tableName">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_0umMM21fEeW70PYbBQIFmQ" name="rowKey">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_0uv9MW1fEeW70PYbBQIFmQ" name="getBmpPictureByRowKey" visibility="public" isStatic="true">
+              <ownedComment xmi:id="_0uv9NW1fEeW70PYbBQIFmQ">
+                <body>/** 
+ * 条件查询 根据rowkey进行条件查询，将符合条件的bmp图片下载到本地。
+ * @param tableName 要查询的表名
+ * @param rowkey 要查询的行键
+ * @param outputPath 要下载该图片到本地的路径，是一个已经存在的目录。例如E:\
+ * @throws IOException
+ */
+</body>
+              </ownedComment>
+              <ownedParameter xmi:id="_0uv9Mm1fEeW70PYbBQIFmQ" name="tableName">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_0uv9M21fEeW70PYbBQIFmQ" name="rowkey">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_0uv9NG1fEeW70PYbBQIFmQ" name="outputPath">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_0uv9Nm1fEeW70PYbBQIFmQ" name="getThumbnailPictureByRowKey" visibility="public" isStatic="true">
+              <ownedComment xmi:id="_0u5HIG1fEeW70PYbBQIFmQ">
+                <body>/** 
+ * 条件查询 根据rowkey进行条件查询，将符合条件的Thumbnail图片下载到本地。
+ * @param tableName
+ * @param rowkey
+ * @param outputPath
+ * @throws IOException
+ */
+</body>
+              </ownedComment>
+              <ownedParameter xmi:id="_0uv9N21fEeW70PYbBQIFmQ" name="tableName">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_0uv9OG1fEeW70PYbBQIFmQ" name="rowkey">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_0uv9OW1fEeW70PYbBQIFmQ" name="outputPath">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_0u5HIW1fEeW70PYbBQIFmQ" name="getDataByRowKey" visibility="public" isStatic="true">
+              <ownedComment xmi:id="_0u5HJm1fEeW70PYbBQIFmQ">
+                <body>/** 
+ * 根据rowkey获取对应的列的值
+ * @param tableName
+ * @param rowkey
+ * @param qualifier
+ * @throws IOException
+ */
+</body>
+              </ownedComment>
+              <ownedParameter xmi:id="_0u5HIm1fEeW70PYbBQIFmQ" name="tableName">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_0u5HI21fEeW70PYbBQIFmQ" name="rowkey">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_0u5HJG1fEeW70PYbBQIFmQ" name="qualifier">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_0u5HJW1fEeW70PYbBQIFmQ" name="return" type="_0qbd821fEeW70PYbBQIFmQ" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_0vC4IG1fEeW70PYbBQIFmQ" name="QueryByCondition2" visibility="public" isStatic="true">
+              <ownedComment xmi:id="_0vC4JW1fEeW70PYbBQIFmQ">
+                <body>/** 
+ * 查询所有列值为queryString的行
+ * @param tableName
+ * @param colFamily
+ * @param qualifier
+ * @param queryString
+ */
+</body>
+              </ownedComment>
+              <ownedParameter xmi:id="_0vC4IW1fEeW70PYbBQIFmQ" name="tableName">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_0vC4Im1fEeW70PYbBQIFmQ" name="colFamily">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_0vC4I21fEeW70PYbBQIFmQ" name="qualifier">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_0vC4JG1fEeW70PYbBQIFmQ" name="queryString">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_0vC4Jm1fEeW70PYbBQIFmQ" name="getAllRows" visibility="public" isStatic="true">
+              <ownedComment xmi:id="_0vMCEG1fEeW70PYbBQIFmQ">
+                <body>/** 
+ * 获取所有数据
+ * @param tableName-表名
+ * @throws Exception
+ */
+</body>
+              </ownedComment>
+              <ownedParameter xmi:id="_0vC4J21fEeW70PYbBQIFmQ" name="tableName">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_0vMCEW1fEeW70PYbBQIFmQ" name="getSelectRows" visibility="public" isStatic="true">
+              <ownedComment xmi:id="_0vMCF21fEeW70PYbBQIFmQ">
+                <body>/** 
+ * 获取指定范围内的记录
+ * @param tableName
+ * @param startRow
+ * @param stopRow
+ * @param family
+ * @param qualifier
+ * @throws Exception
+ */
+</body>
+              </ownedComment>
+              <ownedParameter xmi:id="_0vMCEm1fEeW70PYbBQIFmQ" name="tableName">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_0vMCE21fEeW70PYbBQIFmQ" name="startRow">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_0vMCFG1fEeW70PYbBQIFmQ" name="stopRow">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_0vMCFW1fEeW70PYbBQIFmQ" name="family">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_0vMCFm1fEeW70PYbBQIFmQ" name="qualifier">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_0vMCGG1fEeW70PYbBQIFmQ" name="main" visibility="public" isStatic="true">
+              <ownedParameter xmi:id="_0vMCGW1fEeW70PYbBQIFmQ" name="args">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_0vMCGm1fEeW70PYbBQIFmQ" value="*"/>
+                <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_0vMCG21fEeW70PYbBQIFmQ"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_0qlO5G1fEeW70PYbBQIFmQ" name="sample">
+      <packagedElement xmi:type="uml:Package" xmi:id="_0qlO5W1fEeW70PYbBQIFmQ" name="hdfs">
+        <packagedElement xmi:type="uml:DataType" xmi:id="_0qlO5m1fEeW70PYbBQIFmQ" name="CopyToHDFS"/>
+      </packagedElement>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_0qbd4G1fEeW70PYbBQIFmQ" name="java">
+    <packagedElement xmi:type="uml:Package" xmi:id="_0qbd4W1fEeW70PYbBQIFmQ" name="io">
+      <packagedElement xmi:type="uml:DataType" xmi:id="_0qbd4m1fEeW70PYbBQIFmQ" name="File"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_0qbd421fEeW70PYbBQIFmQ" name="IOException"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_0qbd5G1fEeW70PYbBQIFmQ" name="util">
+      <packagedElement xmi:type="uml:DataType" xmi:id="_0qbd5W1fEeW70PYbBQIFmQ" name="ArrayList"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_0qbd5m1fEeW70PYbBQIFmQ" name="List"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_0qbd521fEeW70PYbBQIFmQ" name="org">
+    <packagedElement xmi:type="uml:Package" xmi:id="_0qbd6G1fEeW70PYbBQIFmQ" name="apache">
+      <packagedElement xmi:type="uml:Package" xmi:id="_0qbd6W1fEeW70PYbBQIFmQ" name="commons">
+        <packagedElement xmi:type="uml:Package" xmi:id="_0qbd6m1fEeW70PYbBQIFmQ" name="io">
+          <packagedElement xmi:type="uml:DataType" xmi:id="_0qbd621fEeW70PYbBQIFmQ" name="FileUtils"/>
+        </packagedElement>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_0qbd7G1fEeW70PYbBQIFmQ" name="hadoop">
+        <packagedElement xmi:type="uml:Package" xmi:id="_0qbd7W1fEeW70PYbBQIFmQ" name="conf">
+          <packagedElement xmi:type="uml:DataType" xmi:id="_0qbd7m1fEeW70PYbBQIFmQ" name="Configuration"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_0qbd721fEeW70PYbBQIFmQ" name="hbase">
+          <packagedElement xmi:type="uml:DataType" xmi:id="_0qbd8G1fEeW70PYbBQIFmQ" name="HBaseConfiguration"/>
+          <packagedElement xmi:type="uml:DataType" xmi:id="_0qbd8W1fEeW70PYbBQIFmQ" name="HColumnDescriptor"/>
+          <packagedElement xmi:type="uml:DataType" xmi:id="_0qbd8m1fEeW70PYbBQIFmQ" name="HTableDescriptor"/>
+          <packagedElement xmi:type="uml:DataType" xmi:id="_0qbd821fEeW70PYbBQIFmQ" name="KeyValue"/>
+          <packagedElement xmi:type="uml:Package" xmi:id="_0qbd9G1fEeW70PYbBQIFmQ" name="client">
+            <packagedElement xmi:type="uml:DataType" xmi:id="_0qbd9W1fEeW70PYbBQIFmQ" name="Delete"/>
+            <packagedElement xmi:type="uml:DataType" xmi:id="_0qbd9m1fEeW70PYbBQIFmQ" name="Get"/>
+            <packagedElement xmi:type="uml:DataType" xmi:id="_0qbd921fEeW70PYbBQIFmQ" name="HBaseAdmin"/>
+            <packagedElement xmi:type="uml:DataType" xmi:id="_0qbd-G1fEeW70PYbBQIFmQ" name="HTable"/>
+            <packagedElement xmi:type="uml:DataType" xmi:id="_0qbd-W1fEeW70PYbBQIFmQ" name="Put"/>
+            <packagedElement xmi:type="uml:DataType" xmi:id="_0qbd-m1fEeW70PYbBQIFmQ" name="Result"/>
+            <packagedElement xmi:type="uml:DataType" xmi:id="_0qbd-21fEeW70PYbBQIFmQ" name="ResultScanner"/>
+            <packagedElement xmi:type="uml:DataType" xmi:id="_0qbd_G1fEeW70PYbBQIFmQ" name="Scan"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Package" xmi:id="_0qbd_W1fEeW70PYbBQIFmQ" name="filter">
+            <packagedElement xmi:type="uml:Package" xmi:id="_0qbd_m1fEeW70PYbBQIFmQ" name="CompareFilter">
+              <packagedElement xmi:type="uml:DataType" xmi:id="_0qbd_21fEeW70PYbBQIFmQ" name="CompareOp"/>
+            </packagedElement>
+            <packagedElement xmi:type="uml:DataType" xmi:id="_0qlO4G1fEeW70PYbBQIFmQ" name="Filter"/>
+            <packagedElement xmi:type="uml:DataType" xmi:id="_0qlO4W1fEeW70PYbBQIFmQ" name="SingleColumnValueFilter"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Package" xmi:id="_0qlO4m1fEeW70PYbBQIFmQ" name="util">
+            <packagedElement xmi:type="uml:DataType" xmi:id="_0qlO421fEeW70PYbBQIFmQ" name="Bytes"/>
+          </packagedElement>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+  </packagedElement>
+</uml:Model>

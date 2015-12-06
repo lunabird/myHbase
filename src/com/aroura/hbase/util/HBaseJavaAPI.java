@@ -1,20 +1,23 @@
 package com.aroura.hbase.util;
 
-import java.io.BufferedReader;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileStatus;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.KeyValue;
+import org.apache.hadoop.hbase.MasterNotRunningException;
+import org.apache.hadoop.hbase.ZooKeeperConnectionException;
 import org.apache.hadoop.hbase.client.Delete;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
@@ -23,12 +26,13 @@ import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
-import org.apache.hadoop.hbase.filter.Filter;
-import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.filter.CompareFilter.CompareOp;
+import org.apache.hadoop.hbase.filter.Filter;
+import org.apache.hadoop.hbase.filter.FirstKeyOnlyFilter;
+import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 
-import com.sample.hdfs.CopyToHDFS;
+import com.aurora.hbase.hdfs.CopyToHDFS;
 
 /**
  * 操作hbase的工具类
@@ -47,14 +51,18 @@ public class HBaseJavaAPI {
 		conf.set("hbase.zookeeper.property.clientPort", "2181");
 	}
 
+	public static Configuration getHBaseConf(){
+		return conf;
+	}
 	/**
 	 * 创建数据库表
 	 * 
 	 * @param tableName-表名
 	 * @param columnFamilys-列族数组
+	 * @throws IOException 
 	 * @throws Exception
 	 */
-	public static void createTable(String tableName, String[] columnFamilys) throws Exception {
+	public static void createTable(String tableName, String[] columnFamilys) throws IOException {
 		// 新建一个数据库管理员
 		HBaseAdmin hAdmin = new HBaseAdmin(conf);
 		if (hAdmin.tableExists(tableName)) {
@@ -64,7 +72,9 @@ public class HBaseJavaAPI {
 			// 新建一个 scores 表的描述
 			HTableDescriptor tableDesc = new HTableDescriptor(tableName);
 			// 在描述里添加列族
-			for (String columnFamily : columnFamilys) {
+			for (String columnFamily:columnFamilys) {
+//				HColumnDescriptor hcd = new HColumnDescriptor(columnFamily);
+//				hcd.setCompressionType(Algorithm.SNAPPY);
 				tableDesc.addFamily(new HColumnDescriptor(columnFamily));
 			}
 			// 根据配置好的描述建表
@@ -74,31 +84,44 @@ public class HBaseJavaAPI {
 	}
 	
 	/**
-	 * 创建数据库表Aurora
+	 * 创建数据库表HAuroraImgTable
 	 * 
 	 * @throws Exception
 	 */
-	public static void createAuroraTable() throws Exception {
+	public static void createAuroraImgTable() throws Exception {
 		// 新建一个数据库管理员
 		HBaseAdmin hAdmin = new HBaseAdmin(conf);
-		if (hAdmin.tableExists("Aurora")) {
+		if (hAdmin.tableExists("HAuroraImgTable")) {
 			System.out.println("表已经存在");
 			System.exit(0);
 		} else {
 			// 新建一个 scores 表的描述
-			HTableDescriptor tableDesc = new HTableDescriptor("Aurora");
+			HTableDescriptor tableDesc = new HTableDescriptor("HAuroraImgTable");
 			// 在描述里添加列族
-			tableDesc.addFamily(new HColumnDescriptor("raw").setBlocksize(589824));
-			tableDesc.addFamily(new HColumnDescriptor("content").setBlocksize(589824));
-			tableDesc.addFamily(new HColumnDescriptor("meta"));
-			tableDesc.addFamily(new HColumnDescriptor("lbp"));
-			tableDesc.addFamily(new HColumnDescriptor("keogram"));
+			tableDesc.addFamily(new HColumnDescriptor("data").setBlocksize(589824));
+			tableDesc.addFamily(new HColumnDescriptor("metas"));
 			// 根据配置好的描述建表
 			hAdmin.createTable(tableDesc);
-			System.out.println("创建表Aurora成功");
+			System.out.println("创建表HAuroraImgTable成功");
 		}
 	}
-	
+	public static void createHAuroraDataTable() throws Exception {
+		// 新建一个数据库管理员
+		HBaseAdmin hAdmin = new HBaseAdmin(conf);
+		if (hAdmin.tableExists("HAuroraDataTable")) {
+			System.out.println("表已经存在");
+			System.exit(0);
+		} else {
+			// 新建一个 scores 表的描述
+			HTableDescriptor tableDesc = new HTableDescriptor("HAuroraDataTable");
+			// 在描述里添加列族
+			tableDesc.addFamily(new HColumnDescriptor("metas").setBlocksize(589824));
+			tableDesc.addFamily(new HColumnDescriptor("algorithm"));
+			// 根据配置好的描述建表
+			hAdmin.createTable(tableDesc);
+			System.out.println("创建表HAuroraDataTable成功");
+		}
+	}
 	
 	/**
 	 * 删除数据库表
@@ -130,22 +153,72 @@ public class HBaseJavaAPI {
 	 * @param value-值
 	 * @throws Exception
 	 */
-	public static void addRow(String tableName, String rowKey, String columnFamily, String column, byte[] value) throws Exception {
+	public static void addRow(String tableName, String rowKey, String columnFamily, byte[] value) throws Exception {
 		HTable table = new HTable(conf, tableName);
+		table.setAutoFlush(true);
+        table.setWriteBufferSize(1024*1024*24);
 		Put put = new Put(Bytes.toBytes(rowKey));
+		put.setWriteToWAL(false);
 		// 参数出分别：列族、列、值
-		put.add(Bytes.toBytes(columnFamily), Bytes.toBytes(column), value);
+		
+		put.add(Bytes.toBytes(columnFamily), null, value);
+		
 		table.put(put);
 	}
 
+	/**
+	 * 向表中插入数据
+	 * @param tableName
+	 * @param columnFamily
+	 * @throws IOException
+	 */
+	public static void setAutoFlushTest(String tableName,String columnFamily) throws IOException{
+		HTable table = new HTable(conf, tableName);
+		
+		table.setAutoFlush(false);
+        table.setWriteBufferSize(60*1024*1024);//
+        
+		ArrayList<String> list = CopyToHDFS.readLogTxt();	
+		
+		List<Put> lp = new ArrayList<Put>();  
+		for(int i=0;i<list.size();i++){
+			String sourcePath = list.get(i);
+			String[] tmp = sourcePath.split("\\\\");
+			String targetPath = "E:/AuroraRawData-2004/200411/N20041109G_F/"+tmp[tmp.length-1];
+			String fileName = targetPath;
+			System.out.println("fileName:"+fileName);
+			File file = new File(fileName);
+			byte[] content = FileUtils.readFileToByteArray(file);//将图片内容转换成字节流
+			String myRowKey = tmp[tmp.length-1].split("\\.")[0];
+			char[] rk = myRowKey.toCharArray();
+			//生成表HAurora表的行键
+			String rowkey = rk[0]+"01"+rk[1]+rk[2]+rk[3]+rk[4]+rk[5]+rk[6]+rk[8]+rk[9]+rk[10]+rk[11]+rk[12]+rk[7];
+			//向表中添加行
+		
+			Put put = new Put(Bytes.toBytes(rowkey));
+			put.setWriteToWAL(false);
+//			put.setWriteToWAL(true);
+			put.add(Bytes.toBytes(columnFamily), null, content);
+			lp.add(put);
+			if(i%100 == 0){
+				table.put(lp);
+				lp.clear();
+			}
+			table.put(put);
+			//System.out.println(rowkey+"  loaded successfully!");
+		}
+		table.put(lp);
+		table.close();//提交flush
+	}
 	/**
 	 * 删除一条数据
 	 * 
 	 * @param tableName-表名
 	 * @param rowKey-行键
+	 * @throws IOException 
 	 * @throws Exception
 	 */
-	public static void delRow(String tableName, String rowKey) throws Exception {
+	public static void delRow(String tableName, String rowKey) throws IOException{
 		HTable table = new HTable(conf, tableName);
 		Delete del = new Delete(Bytes.toBytes(rowKey));
 		table.delete(del);
@@ -155,9 +228,10 @@ public class HBaseJavaAPI {
 	 * 删除多条数据
 	 * @param tableName-表名
 	 * @param rowKeys-行键数组
+	 * @throws IOException 
 	 * @throws Exception
 	 */
-	public static void delMultiRows(String tableName, String[] rowKeys) throws Exception {
+	public static void delMultiRows(String tableName, String[] rowKeys) throws IOException {
 		HTable table = new HTable(conf, tableName);
 		List<Delete> list = new ArrayList<Delete>();
 		for (String rowKey : rowKeys) {
@@ -171,9 +245,10 @@ public class HBaseJavaAPI {
 	 * 获取一条数据
 	 * @param tableName-表名
 	 * @param rowKey-行键数组
+	 * @throws IOException 
 	 * @throws Exception
 	 */
-	public static void getRow(String tableName, String rowKey) throws Exception {
+	public static void getRow(String tableName, String rowKey) throws IOException {
 		HTable table = new HTable(conf, tableName);
 		Get get = new Get(Bytes.toBytes(rowKey));
 		Result result = table.get(get);
@@ -246,7 +321,7 @@ public class HBaseJavaAPI {
 	 * @param qualifier
 	 * @throws IOException
 	 */
-	public static KeyValue getDataByRowKey(String tableName,String rowkey,String qualifier) throws IOException {
+	public static KeyValue getDataByRowKey(String tableName,String rowkey,String family,String qualifier) throws IOException {
 		HTable table = new HTable(conf, tableName);
 		try {
 			Get scan = new Get(rowkey.getBytes());// 根据rowkey查询
@@ -264,8 +339,24 @@ public class HBaseJavaAPI {
 		}
 		return null;
 	}
-	
-	/**
+	public static KeyValue getDataByRowKeyWithoutQualifier(String tableName,String rowkey,String family) throws IOException {
+		HTable table = new HTable(conf, tableName);
+		try {
+			Get get = new Get(rowkey.getBytes());// 根据rowkey查询
+			Result r = table.get(get);
+			System.out.println("获得到rowkey:" + new String(r.getRow()));
+			for (KeyValue keyValue : r.raw()) {
+				if(new String(keyValue.getFamily()).equals(family)){
+					System.out.println("列：" + new String(keyValue.getFamily()));
+					return keyValue;
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	/** QueryByCondition2(String tableName,String colFamily,String qualifier,String queryString):void
 	 * 查询所有列值为queryString的行
 	 * @param tableName
 	 * @param colFamily
@@ -308,24 +399,25 @@ public class HBaseJavaAPI {
 		for (Result result : results) {
 			//for (Result r = rs.next(); r != null; r = rs.next()) {
 			for (KeyValue rowKV : result.raw()) {
-				System.out.print("行名：" + new String(rowKV.getRow()) + " ");
-				System.out.print("时间戳：" + rowKV.getTimestamp() + " ");
-				System.out.print("列族名：" + new String(rowKV.getFamily()) + " ");
-				System.out.print("列名：" + new String(rowKV.getQualifier()) + " ");
-				System.out.println("值：" + new String(rowKV.getValue()) + " ");
+				System.out.println("行名：" + new String(rowKV.getRow()) + " ");
+//				System.out.print("时间戳：" + rowKV.getTimestamp() + " ");
+//				System.out.print("列族名：" + new String(rowKV.getFamily()) + " ");
+//				System.out.print("列名：" + new String(rowKV.getQualifier()) + " ");
+//				System.out.println("值：" + new String(rowKV.getValue()) + " ");
 			}
 		}
 	}
-	/**
+	/** 
 	 * 获取指定范围内的记录
 	 * @param tableName
 	 * @param startRow
 	 * @param stopRow
 	 * @param family
 	 * @param qualifier
+	 * @throws IOException 
 	 * @throws Exception
 	 */
-	public static void getSelectRows(String tableName,String startRow,String stopRow,String family,String qualifier) throws Exception {
+	public static void getSelectRows(String tableName,String startRow,String stopRow,String family,String qualifier) throws IOException {
 		HTable table = new HTable(conf, tableName);
 		Scan scan = new Scan();
 		ResultScanner results = table.getScanner(scan);
@@ -343,37 +435,72 @@ public class HBaseJavaAPI {
 			}
 		}
 	}
+	/** 
+	 * 将BufferedImage转化为byte[]
+	 * @param bi
+	 * @return
+	 * @throws IOException
+	 */
+	public static byte[] bufferedImageToByte(BufferedImage bi) throws IOException {
+
+		BufferedImage originalImage = bi;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write(originalImage, "bmp", baos);
+		baos.flush();
+		byte[] imageInByte = baos.toByteArray();
+		baos.close();
+		return imageInByte;
+
+	}
+	/**
+	 * 获取表中的所有行键
+	 * @param tableName
+	 * @throws IOException
+	 */
+	public void getLevelRowKeys(String tableName,String level) throws IOException{
+		ArrayList<String> rowkeyList = new ArrayList<String>();
+		HTable table = new HTable(conf, tableName.getBytes());
+		System.out.println("scanning full table:");
+		Scan scan = new Scan();
+		scan.setFilter(new FirstKeyOnlyFilter());
+		ResultScanner scanner = table.getScanner(scan);
+		for (Result rr : scanner) {
+//		  byte[] key = rr.getRow();
+		  rowkeyList.add(new String(rr.getRow()));
+		}
+	}
 	
+	public void getSelectedRowKeys(String tableName,String dateStr) throws IOException{
+		ArrayList<String> rowkeyList = new ArrayList<String>();
+		HTable table = new HTable(conf, tableName.getBytes());
+		System.out.println("scanning full table:");
+		Scan scan = new Scan();
+		scan.setFilter(new FirstKeyOnlyFilter());
+		ResultScanner scanner = table.getScanner(scan);
+		for (Result rr : scanner) {
+//		  byte[] key = rr.getRow();
+		  rowkeyList.add(new String(rr.getRow()));
+		}
+	}
 	
 	// 主函数
 	public static void main(String[] args) {
 		try {
-			/*
-			String tableName = "Aurora";
-			// 第一步：创建数据库表：“student”
-			String[] columnFamilys = { "raw", "content","meta","lbp","keogram" };
-			HBaseJavaAPI.createTable(tableName, columnFamilys);
-			*/
 			
+			deleteTable("HAuroraImgTable");
+			createAuroraImgTable();
 			
 			//获取数据库表
-			HTable Table = new HTable(conf, "Aurora");
+			//HTable table = new HTable(conf, "HAuroraImgTable");
 			
-			/*
+			
 			// 第二步：向数据表的添加数据
-			ArrayList<String> list = CopyToHDFS.readLogTxt();
-			for(int i=0;i<list.size();i++){
-				String sourcePath = list.get(i);
-				String[] tmp = sourcePath.split("\\\\");
-				String targetPath = "/home/hp/Desktop/N20041109G_F/"+tmp[tmp.length-1];
-				String fileName = targetPath;
-				File file = new File(fileName);
-				byte[] content = FileUtils.readFileToByteArray(file);//将图片内容转换成字节流
-				HBaseJavaAPI.addRow("Aurora", tmp[tmp.length-1], "raw", "img", content);
-				System.out.println(targetPath+"  loaded successfully!");
-			}
-			System.out.println("done");
-			*/
+			long all = System.currentTimeMillis();
+			setAutoFlushTest("HAuroraImgTable","data");
+			long end = System.currentTimeMillis();
+	        System.out.println("total need time = "+ (end - all)*1.0/1000+"s");
+	        System.out.println("insert complete"+",costs:"+(end - all)+"ms");
+			
 			
 			
 			
